@@ -9,7 +9,7 @@ createApp(App)
   .use(vuetify)
   .use(VueGtag, {
     property: {
-      id: 'GTM-58VTNG5',
+      id: 'G-6VWR11TPSP',
     },
   })
   .mount('#app');
