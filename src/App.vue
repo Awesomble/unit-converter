@@ -44,7 +44,7 @@
               </v-row>
           </v-row>
         </vue-slider>
-        <!-- // 슬라이더-->
+        <!-- // 슬라이더 //-->
 
       </v-container>
     </v-main>
