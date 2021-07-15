@@ -12,7 +12,7 @@
           <v-row class="info-area">
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="2" class="font-weight-light mr-2">국민연금</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">🏡국민연금</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(nationalPension).toLocaleString() }}
                   <em class="font-weight-light">원</em>
@@ -20,7 +20,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="2" class="font-weight-light mr-2">건강보험</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">🏩건강보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(healthInsurance).toLocaleString() }}
                   <em class="font-weight-light">원</em>
@@ -28,7 +28,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="2" class="font-weight-light mr-2">고용보험</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">🧑‍🚒고용보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(employmentInsurance).toLocaleString() }}
                   <em class="font-weight-light">원</em>
@@ -36,7 +36,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="2" class="font-weight-light mr-2">소득세</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">🏦소득세</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(income + income / 10).toLocaleString() }}
                   <em class="font-weight-light">원</em>
@@ -49,13 +49,7 @@
       </v-container>
     </v-main>
     <v-app-bar flat fixed position="bottom">
-      <v-app-bar-title class="text-blue-grey-darken-2 font-weight-bold">
-        <v-icon
-          large
-          color="blue-grey darken-2"
-        >
-          mdi-cash-multiple
-        </v-icon>
+      <v-app-bar-title class="text-blue-grey-darken-2 font-weight-bold money">
         {{ Math.floor(realIncome).toLocaleString() }}원
       </v-app-bar-title>
       <v-spacer></v-spacer>
@@ -272,6 +266,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.money {
+  &:before {
+    content: '🎉';
+    display: inline-block;
+    padding-right: 15px;
+    vertical-align: top;
+  }
+  &>div {
+    display: inline-block;
+  }
+}
 .v-container {
   padding: 0;
 }
