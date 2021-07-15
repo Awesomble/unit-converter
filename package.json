@@ -15,11 +15,9 @@
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
     "vue": "^3.0.0",
-    "vue-gtag": "^2.0.1",
     "vue-slider-component": "^4.0.0-beta.4",
     "vuetify": "^3.0.0-alpha.0",
-    "vuex": "^4.0.0-0",
-    "yarn": "^1.22.10"
+    "vuex": "^4.0.0-0"
   },
   "devDependencies": {
     "@types/gsap": "^3.0.0",
