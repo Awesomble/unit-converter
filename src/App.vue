@@ -276,9 +276,9 @@ html, body, #app {
     content: '🎉';
     display: inline-block;
     padding-right: 15px;
-    vertical-align: top;
   }
   &>div {
+    vertical-align: bottom;
     display: inline-block;
   }
 }
