@@ -205,7 +205,6 @@ export default defineComponent({
     };
   },
   computed: {
-    // a computed getter
     realIncome(): number {
       return (
         (this.scaleValue.score - this.F) / 12
