@@ -13,7 +13,7 @@
           <v-row class="info-area">
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">🏡국민연금</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">국민연금</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(nationalPension).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -21,7 +21,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">🏩건강보험</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">건강보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(healthInsurance).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -29,7 +29,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">🧑‍🚒고용보험</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">‍고용보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(employmentInsurance).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -37,7 +37,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">🏦소득세</v-col>
+                <v-col cols="4" class="font-weight-light mr-2">소득세</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(income + income / 10).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -67,6 +67,7 @@
       v-model="dialog"
       fullscreen="fullscreen"
       hide-overlay
+      persistent
       transition="dialog-bottom-transition"
     >
       <v-card style="overflow: hidden">
@@ -116,6 +117,11 @@
                 tooltip="none"
               >
               </vue-slider>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" class="subtitle-1 font-weight-light">
+              개인 소득여건에 따라 차이가 발생할 수 있습니다.
             </v-col>
           </v-row>
         </v-card-text>
