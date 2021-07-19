@@ -12,6 +12,7 @@
     "@types/greensock": "^1.15.32",
     "add": "^2.0.6",
     "gsap": "^3.7.0",
+    "mobile-device-detect": "^0.4.3",
     "register-service-worker": "^1.7.1",
     "roboto-fontface": "*",
     "vue": "^3.0.0",

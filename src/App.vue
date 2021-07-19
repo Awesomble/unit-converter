@@ -4,6 +4,7 @@
       <v-container fluid  class="content-wrapper">
         <!-- 슬라이더 -->
         <vue-slider
+          v-if="isSlider"
           v-model="scaleValue.score"
           class="salary"
           v-bind="options"
@@ -136,7 +137,15 @@ import 'vue-slider-component/theme/antd.css';
 import VueSlider from 'vue-slider-component';
 import gabgeunse2021 from '@/assets/tax/gabgeunse2021.json';
 import { TweenLite } from 'gsap/gsap-core';
+import {
+  isIOS, isMobile, isAndroid, getUA,
+} from 'mobile-device-detect';
 
+declare global {
+  interface Window {
+    chrome: any;
+  }
+}
 export default defineComponent({
   name: 'App',
   components: {
@@ -243,8 +252,40 @@ export default defineComponent({
     },
   },
   methods: {
+    getHeight() : number {
+      const isInAppMode : boolean = (window.matchMedia('(display-mode: standalone)').matches) || ('standalone' in window.navigator);
+
+      const ua: string = getUA;
+      // memoized values
+
+      let usableOffset = 0;
+      if (isIOS) {
+        usableOffset = 20;
+      } else if (isAndroid && ua.indexOf('Chrome') === -1) {
+        usableOffset = 1;
+      }
+      if (!isMobile) {
+        return window.innerHeight;
+      }
+      const isLandscape : boolean = window.innerWidth > window.innerHeight;
+      let height : number;
+      // on ios devices, this must use screen
+      if (isIOS) {
+        height = isLandscape ? window.screen.width : window.screen.height;
+        if (!isInAppMode) {
+          height -= isLandscape ? 32 : 44;
+          height += 1;
+        }
+      } else {
+        height = (isLandscape ? window.outerWidth : window.outerHeight)
+          / (window.devicePixelRatio || 1);
+      }
+      return height - usableOffset;
+    },
   },
   mounted() {
+    console.log(window.screen.height - 64);
+    this.options.height = window.screen.height - 64;
     this.H = localStorage.H ? Number(localStorage.H) : this.H;
     this.F = localStorage.F ? Number(localStorage.F) : this.F;
     // this.scaleValue.score = localStorage.score ? Number(localStorage.score) : 100000000 / 2;
@@ -266,7 +307,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-html, body, #app {
+html, body, .v-main {
   width: 100%;
   height: 100%;
   overflow: hidden;
