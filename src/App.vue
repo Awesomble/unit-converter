@@ -16,7 +16,7 @@
                 <v-col cols="4" class="font-weight-light mr-2">🏡국민연금</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(nationalPension).toLocaleString() }}
-                  <em class="font-weight-light">원</em>
+                  <span class="font-weight-light">원</span>
                 </v-col>
               </v-row>
               <v-row cols="12">
@@ -24,7 +24,7 @@
                 <v-col cols="4" class="font-weight-light mr-2">🏩건강보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(healthInsurance).toLocaleString() }}
-                  <em class="font-weight-light">원</em>
+                  <span class="font-weight-light">원</span>
                 </v-col>
               </v-row>
               <v-row cols="12">
@@ -32,7 +32,7 @@
                 <v-col cols="4" class="font-weight-light mr-2">🧑‍🚒고용보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(employmentInsurance).toLocaleString() }}
-                  <em class="font-weight-light">원</em>
+                  <span class="font-weight-light">원</span>
                 </v-col>
               </v-row>
               <v-row cols="12">
@@ -40,7 +40,7 @@
                 <v-col cols="4" class="font-weight-light mr-2">🏦소득세</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(income + income / 10).toLocaleString() }}
-                  <em class="font-weight-light">원</em>
+                  <span class="font-weight-light">원</span>
                 </v-col>
               </v-row>
           </v-row>
@@ -252,40 +252,16 @@ export default defineComponent({
     },
   },
   methods: {
-    getHeight() : number {
-      const isInAppMode : boolean = (window.matchMedia('(display-mode: standalone)').matches) || ('standalone' in window.navigator);
-
-      const ua: string = getUA;
-      // memoized values
-
-      let usableOffset = 0;
-      if (isIOS) {
-        usableOffset = 20;
-      } else if (isAndroid && ua.indexOf('Chrome') === -1) {
-        usableOffset = 1;
-      }
-      if (!isMobile) {
-        return window.innerHeight;
-      }
-      const isLandscape : boolean = window.innerWidth > window.innerHeight;
-      let height : number;
-      // on ios devices, this must use screen
-      if (isIOS) {
-        height = isLandscape ? window.screen.width : window.screen.height;
-        if (!isInAppMode) {
-          height -= isLandscape ? 32 : 44;
-          height += 1;
-        }
-      } else {
-        height = (isLandscape ? window.outerWidth : window.outerHeight)
-          / (window.devicePixelRatio || 1);
-      }
-      return height - usableOffset;
-    },
   },
   mounted() {
-    console.log(window.screen.height - 64);
-    this.options.height = window.screen.height - 64;
+    let vh : number = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+    window.addEventListener('resize', () => {
+      // We execute the same script as before
+      vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+    });
+    this.options.height = window.innerHeight - 64;
     this.H = localStorage.H ? Number(localStorage.H) : this.H;
     this.F = localStorage.F ? Number(localStorage.F) : this.F;
     // this.scaleValue.score = localStorage.score ? Number(localStorage.score) : 100000000 / 2;
@@ -310,6 +286,11 @@ export default defineComponent({
 html, body, .v-main {
   width: 100%;
   height: 100%;
+  overflow: hidden;
+}
+.v-main {
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
 }
 .money {
