@@ -13,7 +13,7 @@
           <v-row class="info-area">
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">국민연금</v-col>
+                <v-col cols="2" class="font-weight-light mr-2">국민연금</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(nationalPension).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -21,7 +21,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">건강보험</v-col>
+                <v-col cols="2" class="font-weight-light mr-2">건강보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(healthInsurance).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -29,7 +29,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">‍고용보험</v-col>
+                <v-col cols="2" class="font-weight-light mr-2">‍고용보험</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(employmentInsurance).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -37,7 +37,7 @@
               </v-row>
               <v-row cols="12">
                 <v-spacer/>
-                <v-col cols="4" class="font-weight-light mr-2">소득세</v-col>
+                <v-col cols="2" class="font-weight-light mr-2">소득세</v-col>
                 <v-col cols="3" class="text-right font-weight-bold">
                   {{ Math.floor(income + income / 10).toLocaleString() }}
                   <span class="font-weight-light">원</span>
@@ -143,9 +143,6 @@ import 'vue-slider-component/theme/antd.css';
 import VueSlider from 'vue-slider-component';
 import gabgeunse2021 from '@/assets/tax/gabgeunse2021.json';
 import { TweenLite } from 'gsap/gsap-core';
-import {
-  isIOS, isMobile, isAndroid, getUA,
-} from 'mobile-device-detect';
 
 declare global {
   interface Window {
@@ -205,32 +202,39 @@ export default defineComponent({
     };
   },
   computed: {
+    // 과세기준
+    price(): number {
+      return this.scaleValue.score - this.F;
+    },
+    // 실수령액
     realIncome(): number {
-      return (
-        (this.scaleValue.score - this.F) / 12
+      return this.price / 12
         - this.nationalPension
         - this.healthInsurance
         - this.employmentInsurance
-        - this.income
-        - this.income / 10
-      ) + (this.F / 12);
+        - (this.income + this.income / 10)
+        + (this.F / 12);
     },
     nationalPension(): number {
-      return (this.scaleValue.score / 12) * 0.045;
+      if (this.price > 5240000 * 12) {
+        return 5240000 * 0.045;
+      }
+      return (this.price / 12) * 0.045;
     },
     healthInsurance(): number {
       return (
-        (this.scaleValue.score / 12) * 0.0343
-        + (this.scaleValue.score / 12) * 0.0343 * 0.1152
+        (this.price / 12) * 0.0343
+        + ((this.price / 12) * 0.0343 * 0.1152)
       );
     },
     employmentInsurance(): number {
-      return (this.scaleValue.score / 12) * 0.008;
+      console.log(this.price / 12);
+      return (this.price / 12) * 0.008;
     },
     income(): number {
       const d = gabgeunse2021.tax;
       const l = d.length;
-      const s = (this.scaleValue.score - this.F) / 12000;
+      const s = this.price / 12000;
       for (let i = 0; i < l; i += 1) {
         if (s >= parseFloat(d[i][0]) && s < parseFloat(d[i][1])) {
           return parseFloat(d[i][1 + this.H]);
