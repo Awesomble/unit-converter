@@ -55,6 +55,7 @@
       </v-app-bar-title>
       <v-spacer></v-spacer>
       <v-btn
+        class="mr-3"
         @click="dialog = true"
         color="warning"
         icon="mdi-account-circle"
