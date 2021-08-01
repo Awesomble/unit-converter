@@ -8,7 +8,7 @@
           v-model="scaleValue.score"
           class="scale"
           v-bind="options"
-          :tooltip-formatter="v => v.toLocaleString()"
+          :tooltip-formatter="v => v.toLocaleString() + '평'"
         >
         </vue-slider>
         <!-- // 슬라이더-->
@@ -17,7 +17,7 @@
     </v-main>
     <v-app-bar flat fixed position="bottom">
       <v-app-bar-title class="text-blue-grey-darken-2 font-weight-bold">
-        {{ Math.floor(unitScale).toLocaleString() }}m<sup>2</sup>
+        {{ scaleValue.score }}평은 {{ Math.floor(unitScale).toLocaleString() }}m<sup>2</sup>
       </v-app-bar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
