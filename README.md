@@ -1,4 +1,4 @@
-# salary-ko
+# unit-converter
 
 ## Project setup
 ```
