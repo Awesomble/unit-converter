@@ -17,7 +17,7 @@
     </v-main>
     <v-app-bar flat fixed position="bottom">
       <v-app-bar-title class="text-blue-grey-darken-2 font-weight-bold">
-        {{ scaleValue.score }}평은 {{ Math.floor(unitScale).toLocaleString() }}m<sup>2</sup>
+        {{ scaleValue.score }}평은 약 {{ Math.floor(unitScale).toLocaleString() }}m<sup>2</sup>
       </v-app-bar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
@@ -101,6 +101,16 @@ export default defineComponent({
       document.documentElement.style.setProperty('--vh', `${vh}px`);
     });
     this.isSlider = true;
+    TweenLite.to(this.scaleValue, 0.5, {
+      delay: 0.5,
+      roundProps: 'score',
+      onComplete: () => {
+        this.scaleValue.score = 50;
+        setTimeout(() => {
+          this.options.tooltip = 'active';
+        }, 1500);
+      },
+    });
   },
 });
 </script>
