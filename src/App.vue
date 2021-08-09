@@ -160,6 +160,8 @@ html, body, .v-main {
       border-radius: 0;
       .vue-slider-process {
         border-radius: 0;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         background-color: #ffbb31;
       }
     }
